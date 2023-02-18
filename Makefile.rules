@@ -18,6 +18,12 @@ ifndef KOS_DEPDIR
 %.o: %.cpp
 	kos-c++ $(CFLAGS) $(CXXFLAGS) -c $< -o $@
 
+%.o: %.m
+	kos-cc $(CFLAGS) -c $< -o $@
+
+%.o: %.mm
+	kos-c++ $(CFLAGS) $(CXXFLAGS) -c $< -o $@
+
 else
 
 %.o: %.c

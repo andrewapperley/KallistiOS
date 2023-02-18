@@ -22,7 +22,7 @@ export KOS_INC_PATHS="${KOS_INC_PATHS} -I${KOS_BASE}/include \
 
 # "System" libraries
 export KOS_LIB_PATHS="-L${KOS_BASE}/lib/${KOS_ARCH} -L${KOS_BASE}/addons/lib/${KOS_ARCH} -L${KOS_PORTS}/lib"
-export KOS_LIBS="-Wl,--start-group -lkallisti -lc -lgcc -Wl,--end-group"
+export KOS_LIBS="-Wl,--start-group -lobjc -lgnustep-base -lkallisti -lc -lgcc -Wl,--end-group"
 
 # Main arch compiler paths
 export KOS_CC="${KOS_CC_BASE}/bin/${KOS_CC_PREFIX}-gcc"
@@ -33,14 +33,14 @@ export KOS_OBJCOPY="${KOS_CC_BASE}/bin/${KOS_CC_PREFIX}-objcopy"
 export KOS_LD="${KOS_CC_BASE}/bin/${KOS_CC_PREFIX}-ld"
 export KOS_RANLIB="${KOS_CC_BASE}/bin/${KOS_CC_PREFIX}-ranlib"
 export KOS_STRIP="${KOS_CC_BASE}/bin/${KOS_CC_PREFIX}-strip"
-export KOS_CFLAGS="${KOS_CFLAGS} ${KOS_INC_PATHS} -D_arch_${KOS_ARCH} -D_arch_sub_${KOS_SUBARCH} -Wall -g -fno-builtin"
+export KOS_CFLAGS="${KOS_CFLAGS} ${KOS_INC_PATHS} -D_arch_${KOS_ARCH} -D_arch_sub_${KOS_SUBARCH} -Wall -g -fno-builtin -Wno-error=cast-align -U__GNUSTEP_RUNTIME__"
 export KOS_CPPFLAGS="${KOS_CPPFLAGS} ${KOS_INC_PATHS_CPP} -fno-operator-names -fno-rtti -fno-exceptions"
 
 # Which standards modes we want to compile for
 # Note that this only covers KOS itself, not necessarily anything else compiled
 # with kos-cc or kos-c++.
-export KOS_CSTD="-std=c99"
-export KOS_CPPSTD="-std=gnu++98"
+export KOS_CSTD="-std=c17"
+export KOS_CPPSTD="-std=gnu++20"
 
 export KOS_GCCVER="`kos-cc -dumpversion`"
 
