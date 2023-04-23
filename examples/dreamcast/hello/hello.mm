@@ -1,25 +1,18 @@
 #import <Foundation/NSObject.h>
 
-Class
-object_getClass (id object)
-{
-  if (object != nil)
-    return object->isa;
-  else
-    return Nil;
-}
+@interface Person: NSObject
+- (void)test;
+@end
 
-long sysconf(int name) {
-  switch(name){
-    case _SC_NPROCESSORS_CONF: return 1;
-    case _SC_NPROCESSORS_ONLN: return 1;
-    default: return 0;
-  }
+@implementation Person
+- (void)test {
+  printf("hello dc");
+  fflush(stdout);
 }
-
+@end
 
 int main(int argc, char **argv, char **envp) {
-    /* The requisite line */
-
+    Person *person = [[Person alloc] init];
+    [person test];
     return 0;
 }
