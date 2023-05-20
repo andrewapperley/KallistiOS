@@ -8,7 +8,7 @@ TARGET = hello.elf
 
 # List all of your C files here, but change the extension to ".o"
 # Include "romdisk.o" if you want a rom disk.
-OBJS = hello.m romdisk.o
+OBJS = hello.m
 
 # If you define this, the Makefile.rules will create a romdisk.o for you
 # from the named dir.
@@ -27,7 +27,7 @@ rm-elf:
 	-rm -f $(TARGET) romdisk.*
 
 $(TARGET): $(OBJS)
-	kos-c++ -o $(TARGET) $(OBJS) -std=c++20 -L/Users/andrewapperley/Development/libs-base/Source/obj -I/Users/andrewapperley/Development/libs-base/Headers
+	kos-c++ -o $(TARGET) $(OBJS) -L/Users/andrewapperley/Development/libs-base/Source/obj -I/Users/andrewapperley/Development/libs-base/Headers
 
 run: $(TARGET)
 	$(KOS_LOADER) $(TARGET)

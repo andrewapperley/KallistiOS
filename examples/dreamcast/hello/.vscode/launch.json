@@ -1,0 +1,44 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//KOS GCC compilation
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+        {
+            "name": "TEST KOS debug",
+            "type": "cppdbg", //cppdbg for GDB & LLDB, cppvsdbg for the Visual Studio Windows debugger
+            "request": "launch", //or attach
+            
+            //configure the target application
+            "program": "${workspaceFolder}/${fileBasenameNoExtension}.elf",//path to the executable the debugger will launch or attach to. (used to load debug symbols)
+            "cwd": ".",
+
+            //customize GDB/LLDB
+            "MIMode": "gdb",
+            "miDebuggerPath": "/opt/toolchains/dc/sh-elf/bin/sh-elf-gdb",
+            
+            //Remote debugging or debugging with a local debugger server
+            "miDebuggerServerAddress":"localhost:2159",//common misconception: we connect to the gdb server offered by dc-tool-ip, NOT to the Dreamcast directly !
+            "debugServerPath":"/opt/toolchains/dc/bin/dc-tool-ip", //Full path to debug server to launch.
+            "debugServerArgs": "-g -t 192.168.50.129 -x ${workspaceFolder}/${fileBasenameNoExtension}.elf", //Arguments for the debugger server.
+            "serverStarted": "waiting for gdb client connection...\n", //Server-started pattern to look for in the debug server output.
+            "filterStdout": true, // (default=true)
+            "logging": { //Optional flags to determine what types of messages should be logged to the Debug Console.
+                "exceptions": true,     //exception messages
+                "moduleLoad": true,     //module load events
+                "programOutput": true,  //program output
+                "engineLogging": true,  //diagnostic engine logs
+                "trace": true,         //diagnostic adapter command tracing 
+                "traceResponse": true   //diagnostic adapter command and response tracing
+            }
+            //serverLaunchTimeout//Time in milliseconds, for the debugger to wait for the debugServer to start up. Default is 10000.
+
+            //C/C++ extension: Debugging dump files (Windows) / core dump files (Linux/OSX)
+            //dumpPath
+            //coreDumpPath
+        }
+   ]
+}

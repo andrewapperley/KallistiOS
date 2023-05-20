@@ -1,0 +1,54 @@
+{
+    "version": "2.0.0",
+
+    "tasks": [
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//KOS GCC compilation
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+        {
+            "label": "DEBUG - build current file - KOS",
+            "type": "shell",            
+            "command": "${workspaceFolder}/kos_compile.sh",
+            "args": [
+                "-g",      //turn on debugging info //not really necessary, since KOS already contains this...
+                "-O0",     //Reduce compilation time and make debugging produce the expected results. (overrides KOS's -O2, since only the last option is effective)
+                //"-Og",     //enable optimizations that do not interfere with debugging (overrides KOS's -O2, since only the last option is effective)
+                "${file}", //the file to compile
+                "-o", "${workspaceFolder}/${fileBasenameNoExtension}.elf", //the output file
+                "-I", "${workspaceFolder}/myExtraIncludeFolder", //include directory
+		//"-l", "GL",//OpenGL 1.1 - default KOS
+		//"-l", "GLdc",//OpenGL 1.2 - /kos/addons/GLdc
+		//"-l", "m"    //needed for tanf() in gluPerspective in GLdc
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true //setting all tasks to default=true forces you to choose a task when building. This is what I want.
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "RELEASE - build current file - KOS",
+            "type": "shell",            
+            "command": "${workspaceFolder}/kos_compile.sh",
+            "args": [
+                "-O3",     //level 3 optimization (overrides KOS's -O2, since only the last option is effective)
+                "-s",      //remove debug info. This takes precedence over the -g specified by Kos
+                "${file}", //the file to compile
+                "-o", "${workspaceFolder}/Release/${fileBasenameNoExtension}.elf", //the output file
+                "-I", "${workspaceFolder}/myExtraIncludeFolder", //include directory
+		//"-l", "GL",//OpenGL 1.1 - default KOS
+		//"-l", "GLdc",//OpenGL 1.2 - /kos/addons/GLdc
+		//"-l", "m"    //needed for tanf() in gluPerspective in GLdc
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true //setting all tasks to default=true forces you to choose a task when building. This is what I want.
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}

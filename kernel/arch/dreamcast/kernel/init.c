@@ -242,12 +242,12 @@ void arch_main(void) {
 
     /* Do auto-init stuff */
     arch_auto_init();
-
     __verify_newlib_patch();
 
     /* Run ctors */
     _init();
 
+    // gdb_init();
     /* Call the user's main function */
     rv = main(0, NULL);
 

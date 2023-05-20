@@ -48,6 +48,8 @@ $(stamp_gdb_build): patch_gdb
 	cd build-$(gdb_name); \
         ../$(gdb_name)/configure \
           --disable-werror \
+		  CFLAGS="-I/usr/local/Cellar/gmp/6.2.1_1/include -L/usr/local/Cellar/gmp/6.2.1_1/lib" \
+		  CXXFLAGS="-I/usr/local/Cellar/gmp/6.2.1_1/include -L/usr/local/Cellar/gmp/6.2.1_1/lib" \
           --prefix=$(sh_prefix) \
           --target=$(sh_target) \
           CC="$(CC)" \

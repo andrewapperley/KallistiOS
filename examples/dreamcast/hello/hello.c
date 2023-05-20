@@ -27,8 +27,9 @@ KOS_INIT_ROMDISK(romdisk);
 
 /* Your program's main entry point */
 int main(int argc, char **argv) {
+   gdb_init();
     /* The requisite line */
     printf("\nHello world!\n\n");
-
+    fflush(stdout);
     return 0;
 }
