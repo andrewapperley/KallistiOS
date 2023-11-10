@@ -27,7 +27,7 @@ rm-elf:
 	-rm -f $(TARGET) romdisk.*
 
 $(TARGET): $(OBJS)
-	kos-c++ -o $(TARGET) $(OBJS) -L/Users/andrewapperley/Development/libs-base/Source/obj -I/Users/andrewapperley/Development/libs-base/Headers
+	kos-c++ -std=gnu11 -o $(TARGET) $(OBJS) -L/Users/andrewapperley/Development/libs-base/Source/obj -I/Users/andrewapperley/Development/libs-base/Headers
 
 run: $(TARGET)
 	$(KOS_LOADER) $(TARGET)
