@@ -24,7 +24,7 @@ export KOS_INC_PATHS="${KOS_INC_PATHS} -I${KOS_BASE}/include \
 
 # "System" libraries
 export KOS_LIB_PATHS="-L${KOS_BASE}/lib/${KOS_ARCH} -L${KOS_BASE}/addons/lib/${KOS_ARCH} -L${KOS_PORTS}/lib"
-export KOS_LIBS="-Wl,--start-group -lpthread -lgnustep-base -lgnustep-baseadd -lkosutils -lkallisti -lobjc -lm -lc -lgcc -Wl,--end-group"
+export KOS_LIBS="-Wl,--start-group -lpthread -lgnustep-base -lkosutils -lkallisti -lobjc -lm -lc -lgcc -Wl,--end-group"
 
 # Main arch compiler paths
 export KOS_CC="${KOS_CC_BASE}/bin/${KOS_CC_PREFIX}-gcc"
@@ -35,9 +35,9 @@ export KOS_OBJCOPY="${KOS_CC_BASE}/bin/${KOS_CC_PREFIX}-objcopy"
 export KOS_LD="${KOS_CC_BASE}/bin/${KOS_CC_PREFIX}-ld"
 export KOS_RANLIB="${KOS_CC_BASE}/bin/${KOS_CC_PREFIX}-gcc-ranlib"
 export KOS_STRIP="${KOS_CC_BASE}/bin/${KOS_CC_PREFIX}-strip"
-export KOS_CFLAGS="${KOS_CFLAGS} ${KOS_INC_PATHS} -D_arch_${KOS_ARCH} -D_arch_sub_${KOS_SUBARCH} -Wall -g -fno-builtin -fconstant-string-class=NSConstantString"
-export KOS_CPPFLAGS="${KOS_CPPFLAGS} ${KOS_INC_PATHS_CPP} -fno-operator-names -fno-rtti -fno-exceptions"
 export KOS_OBJCFLAGS="${KOS_OBJCFLAGS} -lkosutils -fconstant-string-class=NSConstantString -fgnu-runtime"
+export KOS_CFLAGS="${KOS_CFLAGS} ${KOS_INC_PATHS} -D_arch_${KOS_ARCH} -D_arch_sub_${KOS_SUBARCH} -Wall -g -fno-builtin"
+export KOS_CPPFLAGS="${KOS_CPPFLAGS} ${KOS_INC_PATHS_CPP}"
 
 # Which standards modes we want to compile for
 # Note that this only covers KOS itself, not necessarily anything else compiled

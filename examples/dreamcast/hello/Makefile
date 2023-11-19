@@ -27,7 +27,7 @@ rm-elf:
 	-rm -f $(TARGET) romdisk.*
 
 $(TARGET): $(OBJS)
-	kos-c++ -std=gnu11 -o $(TARGET) $(OBJS) -L/Users/andrewapperley/Development/libs-base/Source/obj -I/Users/andrewapperley/Development/libs-base/Headers
+	kos-c++ -o $(TARGET) $(OBJS) -I /usr/lib/GNUstep/System/Library/Headers -L /usr/lib/GNUstep/System/Library/Libraries/ -fconstant-string-class=NSConstantString
 
 run: $(TARGET)
 	$(KOS_LOADER) $(TARGET)
