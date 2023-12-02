@@ -28,7 +28,6 @@ rm-elf:
 
 $(TARGET): $(OBJS)
 	kos-c++ -o $(TARGET) $(OBJS) -I /usr/lib/GNUstep/System/Library/Headers -L /usr/lib/GNUstep/System/Library/Libraries/ -fconstant-string-class=NSConstantString
-
 run: $(TARGET)
 	$(KOS_LOADER) $(TARGET)
 
