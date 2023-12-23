@@ -122,6 +122,19 @@ makejobs=-j2
 # included examples use other languages.
 pass2_languages=c,c++,objc,obj-c++,rust
 
+# Floating point precision support (m4|m4-single|m4-single-only)
+# Build compiler and multilib support for various floating-point operation
+# modes. m4 uses double-precision mode, m4-single uses single-precision mode by
+# default, and m4-single-only uses single-precision mode only. KallistiOS
+# currently only supports m4-single-only.
+precision_modes=m4,m4-single,m4-single-only
+
+# Default floating point mode (m4|m4-single|m4-single-only)
+# Choose the default floating point precision mode when GCC is invoked. The mode
+# can be overridden by using passing -m4, -m4-single, or -m4-single-only to GCC.
+# KallistiOS currently only supports m4-single-only, so that is the default.
+default_precision=m4-single-only
+
 # GCC threading model (single|kos|posix*)
 # With GCC 4.x versions and up, the patches provide a 'kos' thread model, so you 
 # should use it. If you really don't want threading support for C++ (or 
