@@ -4,7 +4,7 @@
 #   
 
 TARGET = foundation.elf
-OBJS = foundation.o
+OBJS = foundation.o NSObject/NSObjectTests.o
 CFLAGS = -std=c11
 
 all: rm-elf $(TARGET)
@@ -18,7 +18,7 @@ rm-elf:
 	-rm -f $(TARGET) 
 
 $(TARGET): $(OBJS)
-	kos-c++ -o $(TARGET) $(OBJS) -lobjc -fconstant-string-class=NSConstantString
+	kos-c++ -o $(TARGET) $(OBJS)
 
 run: $(TARGET)
 	$(KOS_LOADER) $(TARGET)
