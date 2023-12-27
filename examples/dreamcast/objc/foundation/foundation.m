@@ -24,29 +24,38 @@ int main(int argc, char *argv[]) {
     int result = EXIT_SUCCESS;
     char *failedTestName = NULL;
     
-    // Grab all test case method signatures. These will be methods that begin with the string 'test'.
-    unsigned int outCount = 0;
-    Method *methodList = class_copyMethodList([NSObjectTests class], &outCount);
-    NSObjectTests *tests = [[NSObjectTests alloc] init];
+    int testCount = 1;
+    Class testClasses[] = {
+        [NSObjectTests class]
+    };
 
-    if(outCount <= 0) {
-        fprintf(stderr, "No test cases implemented!\n");
-        result = EXIT_FAILURE;
-        goto exit;
-    }
-    
-    for(int i = outCount-1; i >= 0; i--) {
-        SEL selector = method_getName(methodList[i]);
-        const char *selectorName = sel_getName(selector);
-        if (strstr(selectorName, "test")) {
-            IMP imp = objc_msg_lookup(tests, selector);
-            id testCaseResult = imp(tests, selector);
-            if (testCaseResult == EXIT_FAILURE){
-                result = EXIT_FAILURE;
-                failedTestName = selectorName;
-                goto exit;
+    for (int i = 0; i < testCount; i++) {
+        Class testClass = testClasses[i];
+        // Grab all test case method signatures. These will be methods that begin with the string 'test'.
+        unsigned int outCount = 0;
+        Method *methodList = class_copyMethodList(testClass, &outCount);
+
+        if(outCount <= 0) {
+            fprintf(stderr, "No test cases implemented!\n");
+            result = EXIT_FAILURE;
+            goto exit;
+        }
+        FoundationTestCase *tests = class_createInstance(testClass, 0);
+        for(int ii = outCount-1; ii >= 0; ii--) {
+            SEL selector = method_getName(methodList[ii]);
+            const char *selectorName = sel_getName(selector);
+            if (strstr(selectorName, "test")) {
+                IMP imp = objc_msg_lookup(tests, selector);
+                id testCaseResult = imp(tests, selector);
+                if (testCaseResult == EXIT_FAILURE){
+                    result = EXIT_FAILURE;
+                    failedTestName = selectorName;
+                    free(methodList);
+                    goto exit;
+                }
             }
         }
+        free(methodList);
     }
 
     goto exit;
@@ -59,7 +68,6 @@ exit:
         printf("**** SUCCESS! ****\n");
 
     //   [[NSRunLoop currentRunLoop] run];
-    free(methodList);
     [pool release];
     return result;
 }

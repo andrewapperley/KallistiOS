@@ -7,7 +7,7 @@
    setup and demonstrates the power that such a library can provide.
 */
 
-#include <objc/object.h>
+#include <objc/Object.h>
 
 @interface FoundationTestCase: Object
 
