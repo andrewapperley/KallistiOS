@@ -9,6 +9,7 @@
 
 #include <Foundation/Foundation.h>
 #include "NSObject/NSObjectTests.h"
+#import <objc/objc.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,77 +18,48 @@
 
 
 int main(int argc, char *argv[]) {
+    // gdb_init();
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
     int result = EXIT_SUCCESS;
-    Person *person1 = NULL;
-    Person *person2 = NULL;
+    char *failedTestName = NULL;
+    
+    // Grab all test case method signatures. These will be methods that begin with the string 'test'.
+    unsigned int outCount = 0;
+    Method *methodList = class_copyMethodList([NSObjectTests class], &outCount);
+    NSObjectTests *tests = [[NSObjectTests alloc] init];
 
-    // Create a new instance of person
-    person1 = [[Person alloc] init];
-
-    // Verify the runtime found the class and NSObject was able to initialize correctly
-    if(!person1) {
-        fprintf(stderr, "Failed to create Person instance!\n");
-        result = EXIT_FAILURE;
-        goto exit;
-    } 
-    else printf("Created Person instance.\n");
-
-    // Call message handler for "addName," setting instance variables.
-    [person1 addName: @"Joe" age: [NSNumber numberWithInteger: 20] height: [NSNumber numberWithFloat: 6.1f]];
-
-    // Query values of instance variables by string names
-    NSString *name = person1.name;
-    NSInteger age = [person1.age integerValue];
-    float height = [person1.height floatValue];
-
-    // Verify values were properly set and retrieved
-    if(![name isEqual: @"Joe"] || age != 20 || height != 6.1f) {
-        fprintf(stderr, "Failed to set and retrieve instance variables!\n");
+    if(outCount <= 0) {
+        fprintf(stderr, "No test cases implemented!\n");
         result = EXIT_FAILURE;
         goto exit;
     }
-    else printf("Set and retrieved instance variables.\n");
-
-    // Check if instance of Person responds to getBestFriend
-    if(![person1 respondsToSelector: @selector(bestFriend)]) { 
-        fprintf(stderr, "Does not respond to getBestFriend message!\n");
-        result = EXIT_FAILURE;
-        goto exit;
+    
+    for(int i = outCount-1; i >= 0; i--) {
+        SEL selector = method_getName(methodList[i]);
+        const char *selectorName = sel_getName(selector);
+        if (strstr(selectorName, "test")) {
+            IMP imp = objc_msg_lookup(tests, selector);
+            id testCaseResult = imp(tests, selector);
+            if (testCaseResult == EXIT_FAILURE){
+                result = EXIT_FAILURE;
+                failedTestName = selectorName;
+                goto exit;
+            }
+        }
     }
-    else printf("Checked for responding to message handler.\n");
 
-    // Construct another Person instance
-    person2 = [[Person alloc] init];
-    
-    if(!person2) {
-        fprintf(stderr, "Failed to create second Person instance!\n");
-        result = EXIT_FAILURE;
-        goto exit;
-    } 
-    else printf("Created second Person instance.\n");
-
-    // Initialize instance variables
-    [person2 addName: @"Jim" age: [NSNumber numberWithInteger: 30] height: [NSNumber numberWithFloat: 5.2f]];
-    
-    // Test out setting and retrieving properties
-    person2.dead = YES;
-    person1.bestFriend = person2;
-
-    if(!person2.dead || ![person1.bestFriend isEqual:person2]) {
-        fprintf(stderr, "Failed to set and retrieve properties!\n");
-        result = EXIT_FAILURE;
-    } else printf("Set and retrieved properties!\n");
+    goto exit;
 
 exit:
 
     if(result == EXIT_FAILURE) 
-        fprintf(stderr, "**** FAILURE! ****\n");
+        fprintf(stderr, "**** %s FAILURE! ****\n", failedTestName);
     else  
         printf("**** SUCCESS! ****\n");
 
     //   [[NSRunLoop currentRunLoop] run];
+    free(methodList);
     [pool release];
     return result;
 }
