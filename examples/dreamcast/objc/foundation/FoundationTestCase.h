@@ -7,8 +7,8 @@
    setup and demonstrates the power that such a library can provide.
 */
 
-#include <Foundation/Foundation.h>
+#include <objc/object.h>
 
-@interface FoundationTestCase: NSObject
+@interface FoundationTestCase: Object
 
 @end
