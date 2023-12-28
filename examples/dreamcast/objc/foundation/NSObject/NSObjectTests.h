@@ -7,8 +7,8 @@
    setup and demonstrates the power that such a library can provide.
 */
 
-#include <Foundation/Foundation.h>
-#include "../FoundationTestCase.h"
+#import <Foundation/Foundation.h>
+#import "../FoundationTestCase.h"
 
 @class Person;
 

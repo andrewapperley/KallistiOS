@@ -1,13 +1,13 @@
 /* KallistiOS ##version##
 
-   foundation.m
+   FoundationTestCase.h
    Copyright (C) 2023 Andrew Apperley
 
    This example serves to verify that Libs-Base (Foundation) is correctly
    setup and demonstrates the power that such a library can provide.
 */
 
-#include <objc/Object.h>
+#import <objc/Object.h>
 
 @interface FoundationTestCase: Object
 

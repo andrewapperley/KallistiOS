@@ -7,8 +7,9 @@
    setup and demonstrates the power that such a library can provide.
 */
 
-#include <Foundation/Foundation.h>
-#include "NSObject/NSObjectTests.h"
+#import <Foundation/Foundation.h>
+#import "NSObject/NSObjectTests.h"
+#import "Containers/ContainerTests.h"
 #import <objc/objc.h>
 
 #include <stdio.h>
@@ -24,12 +25,14 @@ int main(int argc, char *argv[]) {
     int result = EXIT_SUCCESS;
     char *failedTestName = NULL;
     
-    int testCount = 1;
     Class testClasses[] = {
-        [NSObjectTests class]
+        [NSObjectTests class],
+        [ContainerTests class]
     };
 
-    for (int i = 0; i < testCount; i++) {
+    int testClassesCount = sizeof(testClasses) / sizeof(testClasses[0]);
+
+    for (int i = 0; i < testClassesCount; i++) {
         Class testClass = testClasses[i];
         // Grab all test case method signatures. These will be methods that begin with the string 'test'.
         unsigned int outCount = 0;

@@ -4,7 +4,7 @@
 #   
 
 TARGET = foundation.elf
-OBJS = foundation.o NSObject/NSObjectTests.o FoundationTestCase.o
+OBJS = foundation.o FoundationTestCase.o NSObject/NSObjectTests.o Containers/ContainerTests.o 
 CFLAGS = -std=c11
 
 all: rm-elf $(TARGET)

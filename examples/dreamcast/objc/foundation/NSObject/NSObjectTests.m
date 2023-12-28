@@ -7,7 +7,7 @@ What we are testing here:
     and assures they are cleaned up if the objects are marked for autorelease)
 */
 
-#include "NSObjectTests.h"
+#import "NSObjectTests.h"
 #include <stdio.h>
 
 @interface Person: NSObject 
