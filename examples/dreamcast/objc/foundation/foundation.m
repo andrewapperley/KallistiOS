@@ -21,9 +21,8 @@
 int main(int argc, char *argv[]) {
     // gdb_init();
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
     int result = EXIT_SUCCESS;
-    char *failedTestName = NULL;
+    const char *failedTestName = NULL;
     
     Class testClasses[] = {
         [NSObjectTests class],
@@ -34,16 +33,18 @@ int main(int argc, char *argv[]) {
 
     for (int i = 0; i < testClassesCount; i++) {
         Class testClass = testClasses[i];
+        const char *className = class_getName(testClass);
+        printf("**** Starting %s Tests ****\n", className);
         // Grab all test case method signatures. These will be methods that begin with the string 'test'.
         unsigned int outCount = 0;
         Method *methodList = class_copyMethodList(testClass, &outCount);
 
         if(outCount <= 0) {
-            fprintf(stderr, "No test cases implemented!\n");
+            fprintf(stderr, "%s didn't implement any test cases !\n", className);
             result = EXIT_FAILURE;
             goto exit;
         }
-        FoundationTestCase *tests = class_createInstance(testClass, 0);
+        id tests = class_createInstance(testClass, 0);
         for(int ii = outCount-1; ii >= 0; ii--) {
             SEL selector = method_getName(methodList[ii]);
             const char *selectorName = sel_getName(selector);
@@ -58,6 +59,7 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
+        printf("**** Finished %s Tests ****\n\n", className);
         free(methodList);
     }
 
@@ -65,10 +67,14 @@ int main(int argc, char *argv[]) {
 
 exit:
 
-    if(result == EXIT_FAILURE) 
-        fprintf(stderr, "**** %s FAILURE! ****\n", failedTestName);
-    else  
-        printf("**** SUCCESS! ****\n");
+    if(result == EXIT_FAILURE) {
+        fprintf(stderr, "\n**** FAILURE! ****\n");
+        if (failedTestName) {
+            fprintf(stderr, "**** %s ****\n\n", failedTestName);
+        }
+    } else {
+        printf("**** SUCCESS! ****\n\n");
+    }
 
     //   [[NSRunLoop currentRunLoop] run];
     [pool release];

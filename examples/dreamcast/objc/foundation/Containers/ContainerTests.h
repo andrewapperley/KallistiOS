@@ -5,10 +5,10 @@
 
    These tests will verify that the container classes of Foundation are working correctly.
 */
+#import <Foundation/NSObject.h>
 
-#import <Foundation/Foundation.h>
-#import "../FoundationTestCase.h"
-
-@interface ContainerTests: FoundationTestCase
-
+@interface ContainerTests: NSObject
+- (int) testNSArray;
+- (int) testNSDictionary;
+- (int) testNSSet;
 @end

@@ -8,6 +8,7 @@ What we are testing here:
 */
 
 #import "NSObjectTests.h"
+#import <Foundation/Foundation.h>
 #include <stdio.h>
 
 @interface Person: NSObject 

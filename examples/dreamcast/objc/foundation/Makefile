@@ -4,7 +4,7 @@
 #   
 
 TARGET = foundation.elf
-OBJS = foundation.o FoundationTestCase.o NSObject/NSObjectTests.o Containers/ContainerTests.o 
+OBJS = ./NSObject/NSObjectTests.o ./Containers/ContainerTests.o ./foundation.o 
 CFLAGS = -std=c11
 
 all: rm-elf $(TARGET)
@@ -15,7 +15,7 @@ clean: rm-elf
 	-rm -f $(OBJS) 
 
 rm-elf:
-	-rm -f $(TARGET) 
+	-rm -f $(TARGET) $(OBJS)
 
 $(TARGET): $(OBJS)
 	kos-c++ -o $(TARGET) $(OBJS)

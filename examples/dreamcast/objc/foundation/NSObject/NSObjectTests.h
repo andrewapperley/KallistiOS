@@ -7,12 +7,11 @@
    setup and demonstrates the power that such a library can provide.
 */
 
-#import <Foundation/Foundation.h>
-#import "../FoundationTestCase.h"
+#import <Foundation/NSObject.h>
 
 @class Person;
 
-@interface NSObjectTests: FoundationTestCase {
+@interface NSObjectTests: NSObject {
    @private
    Person *_person1;
    Person *_person2;
