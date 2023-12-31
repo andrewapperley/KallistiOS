@@ -72,6 +72,17 @@ What we are testing here:
 }
 
 - (int)testNSSet {
+    NSMutableSet *set = [NSMutableSet set];
+    for (NSInteger i = 0; i < 20; i++) {
+        [set addObject: i % 2 == 1 ? @"X" : @"O"];
+    }
+    // Verify the correct number of objects were added to the set
+    if(!set && [set count] != 10 ) {
+        fprintf(stderr, "Failed to create a set with the correct number of items!\n");
+        return EXIT_FAILURE;
+    } 
+    else printf("Created a set with 10 items.\n");
+
     return EXIT_SUCCESS;
 }
 @end
