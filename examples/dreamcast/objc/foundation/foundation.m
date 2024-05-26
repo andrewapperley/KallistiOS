@@ -7,7 +7,8 @@
    setup and demonstrates the power that such a library can provide.
 */
 
-#import <Foundation/Foundation.h>
+#import <Foundation/NSObject.h>
+#import <Foundation/NSAutoreleasePool.h>
 #import "NSObject/NSObjectTests.h"
 #import "Containers/ContainerTests.h"
 #import <objc/objc.h>
@@ -19,7 +20,6 @@
 
 
 int main(int argc, char *argv[]) {
-    // gdb_init();
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     int result = EXIT_SUCCESS;
     const char *failedTestName = NULL;
